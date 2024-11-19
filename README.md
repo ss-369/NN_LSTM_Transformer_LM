@@ -1,169 +1,149 @@
-
-
-```yaml
 ---
-title: "2023202005 Assignment 1"
-description: >
-  This assignment involves implementing and evaluating three language models:
-  NN-based Language Model (LM1), LSTM-based Language Model (LM2), and
-  Transformer Decoder-based Language Model (LM3). The models are trained,
-  validated, and tested on the Auguste Maquet corpus, with perplexity as
-  the evaluation metric. Each model's performance is analyzed and compared.
----
-```
 
-# **2023202005 Assignment 1**
+# **NN_LSTM_Transformer_LM**
 
-## **Overview**
-
-This assignment involves implementing and evaluating three language models:  
+This repository contains the implementation and evaluation of three language models:  
 1. **NN-based Language Model (LM1)**  
 2. **LSTM-based Language Model (LM2)**  
 3. **Transformer Decoder-based Language Model (LM3)**  
 
-The models are trained, validated, and tested on the **Auguste Maquet corpus**, with **perplexity** as the evaluation metric. Each model's performance is analyzed and compared.
+The models are trained on the **Auguste Maquet corpus** and evaluated using **perplexity** as the primary metric. The repository provides scripts for training, validating, and testing the models, along with detailed results and analysis.
 
 ---
 
-## **Files**
+## **Overview**
 
-- `2023202005-assignment1.ipynb`: Main notebook for implementing and running experiments.
-- `2023202005-LM1-*`: Perplexity files for NN-based language model.
-- `2023202005-LM2-*`: Perplexity files for LSTM-based language model.
-- `2023202005-LM3-*`: Perplexity files for Transformer Decoder-based language model.
-- `2023202005_q1.py`: Python script for NN-based language model.
-- `2023202005_q2.py`: Python script for LSTM-based language model.
-- `2023202005_q3.py`: Python script for Transformer Decoder-based language model.
-- `2023202005_Report.pdf`: Report containing experiment details, results, and analysis.
-- `tokenise.py`: Preprocessing script for tokenizing text data.
-- `readme.md`: Detailed instructions for running the code and loading pretrained models.
+### Models Implemented:
+- **NN-based Language Model (LM1)**: A simple neural network-based model.  
+- **LSTM-based Language Model (LM2)**: A recurrent model leveraging Long Short-Term Memory units.  
+- **Transformer Decoder-based Language Model (LM3)**: An attention-based model derived from the "Attention is All You Need" architecture.
+
+### Dataset:
+- The **Auguste Maquet corpus** is used for training and evaluation.  
+- The data is split into:
+  - **70%** for training
+  - **10%** for validation
+  - **20%** for testing.
+
+### Evaluation:
+- **Perplexity** is used to measure model performance on both the validation and test sets.
+
+---
+
+## **Repository Structure**
+
+```
+NN_LSTM_Transformer_LM/
+├── 2023202005-assignment1.ipynb  # Main notebook for all models
+├── 2023202005_q1.py             # NN-based Language Model script
+├── 2023202005_q2.py             # LSTM-based Language Model script
+├── 2023202005_q3.py             # Transformer Decoder-based Language Model script
+├── tokenise.py                  # Script for preprocessing and tokenization
+├── train.txt                    # Training dataset
+├── val.txt                      # Validation dataset
+├── test.txt                     # Testing dataset
+├── pretrained_models/           # Directory for pre-trained models
+│   └── transformer_model.pth    # Example: Pre-trained Transformer model
+├── results/                     # Directory for perplexity results
+│   ├── LM1-train-perplexity.txt
+│   ├── LM1-val-perplexity.txt
+│   ├── LM1-test-perplexity.txt
+│   ├── LM2-*.txt
+│   └── LM3-*.txt
+├── 2023202005_Report.pdf        # Report with experiment details
+├── README.md                    # Repository documentation (this file)
+```
 
 ---
 
 ## **Setup**
 
-### **Dependencies**
+### Dependencies
 
-Install the required Python libraries:
+Install the following Python libraries:
 ```bash
 pip install torch numpy tqdm gensim matplotlib
 ```
 
-### **Pre-trained Embeddings**
+### Dataset
 
-Pre-trained **GloVe embeddings** (100-dimensional) are used. The embeddings are automatically downloaded using the `gensim` library during training.
-
-### **Dataset**
-
-The **Auguste Maquet corpus** is split into three parts:
-- `train.txt` (70%): Training data.
-- `val.txt` (10%): Validation data.
-- `test.txt` (20%): Test data.
-
-Ensure these files are in the working directory.
+Ensure that `train.txt`, `val.txt`, and `test.txt` are present in the working directory.
 
 ---
 
-## **Model Training and Evaluation**
+## **Usage**
 
-### **Training**
+### Training the Models
 
-To train the models, use the Jupyter notebook `2023202005-assignment1.ipynb`. This will train the NN, LSTM, and Transformer models sequentially and save the perplexity results for each model.
+Run the following scripts to train individual models:
+- **NN-based model**:
+  ```bash
+  python 2023202005_q1.py
+  ```
+- **LSTM-based model**:
+  ```bash
+  python 2023202005_q2.py
+  ```
+- **Transformer Decoder-based model**:
+  ```bash
+  python 2023202005_q3.py
+  ```
 
-Alternatively, use the individual scripts:
-- For NN-based model: `python 2023202005_q1.py`
-- For LSTM-based model: `python 2023202005_q2.py`
-- For Transformer Decoder-based model: `python 2023202005_q3.py`
+Alternatively, use the notebook `2023202005-assignment1.ipynb` to train and evaluate all models.
 
-### **Perplexity Files**
+### Pre-trained Models
 
-Perplexity scores for train, validation, and test sets are saved in text files:
-- **NN-based LM (LM1)**:
-  - `2023202005-LM1-train-perplexity.txt`
-  - `2023202005-LM1-val-perplexity.txt`
-  - `2023202005-LM1-test-perplexity.txt`
-- **LSTM-based LM (LM2)**:
-  - `2023202005-LM2-train-perplexity.txt`
-  - `2023202005-LM2-val-perplexity.txt`
-  - `2023202005-LM2-test-perplexity.txt`
-- **Transformer-based LM (LM3)**:
-  - `2023202005-LM3-train-perplexity.txt`
-  - `2023202005-LM3-val-perplexity.txt`
-  - `2023202005-LM3-test-perplexity.txt`
+Pre-trained models are available for download in the `pretrained_models` directory. You can also download them from this [link](https://drive.google.com/drive/folders/1-oGzikyY4akBL7o51fJd2P7kftN7kFGW?usp=drive_link).
 
-Each file contains line-wise perplexity scores for sentences, and the average perplexity is reported at the end.
-
-### **Evaluation**
-
-The models are evaluated using perplexity on the test set. The test perplexities for each model are saved in their respective files.
-
----
-
-## **Loading Pre-trained Models**
-
-Pre-trained models can be downloaded from [this link](https://drive.google.com/drive/folders/1-oGzikyY4akBL7o51fJd2P7kftN7kFGW?usp=drive_link).
-
-To load and evaluate a pre-trained model:
+To load a pre-trained model:
 ```python
-# Function to load model
-def load_model(model, optimizer, path="language_model.pth"):
-    if os.path.isfile(path):
-        checkpoint = torch.load(path)
-        model.load_state_dict(checkpoint['model_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        epoch = checkpoint['epoch']
-        print(f"Model loaded from {path}, resuming from epoch {epoch}")
-        return epoch
-    else:
-        print(f"No checkpoint found at {path}")
-        return 0
-
-# Example usage
-start_epoch = load_model(model, optimizer, "language_model.pth")
+# Function to load a pre-trained model
+def load_model(model, optimizer, path="pretrained_models/transformer_model.pth"):
+    checkpoint = torch.load(path)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    print("Model loaded successfully!")
 ```
 
-### Usage for Evaluation:
-```python
-# Load pre-trained model
-load_model(model, optimizer, "language_model.pth")
+### Evaluating the Models
 
-# Compute perplexity on test set
-test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
+After training, perplexity scores are saved in the `results` directory. Evaluate the test perplexity as follows:
+```python
+test_perplexity = compute_perplexity(model, test_loader, criterion, device)
 print(f"Test Perplexity: {test_perplexity:.4f}")
 ```
 
 ---
 
-## **Submission Format**
-
-Submit a zip file named as `<roll_number>_assignment1.zip`, containing:
-1. **Source Code**:
-   - `2023202005-assignment1.ipynb`
-   - `2023202005_q1.py`, `2023202005_q2.py`, `2023202005_q3.py`
-   - `tokenise.py`
-2. **Perplexity Files**:
-   - `2023202005-LM1-*`
-   - `2023202005-LM2-*`
-   - `2023202005-LM3-*`
-3. **Pretrained Models**:
-   - Include a download link for large files if needed.
-4. **README.md**:
-   - Instructions to execute the code and load pre-trained models.
-
----
-
 ## **Results**
 
-The detailed analysis, results, and comparisons of perplexity scores for each model can be found in `2023202005_Report.pdf`.
+The perplexity scores for each model are saved in the `results` directory:
+- `LM1-*`: NN-based language model results.
+- `LM2-*`: LSTM-based language model results.
+- `LM3-*`: Transformer Decoder-based language model results.
+
+Detailed analysis and comparisons are included in `2023202005_Report.pdf`.
 
 ---
 
-## **Resources**
+## **Submission**
 
-- [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
-- [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
-- [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
+Include the following in your submission:
+1. Source code (`*.py` and `*.ipynb` files).
+2. Perplexity results (`results` directory).
+3. Pre-trained models (or a download link if the files are large).
+4. A detailed report (`2023202005_Report.pdf`).
+
+Compress these into a zip file named:  
+`2023202005_Assignment1.zip`.
 
 ---
 
-This version ensures both correct formatting and YAML header structure. Let me know if you need further adjustments!
+## **References**
+
+1. [Attention Is All You Need](https://arxiv.org/abs/1706.03762)  
+2. [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)  
+3. [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)  
+
+--- 
+
