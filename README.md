@@ -1,10 +1,22 @@
+
+
+```yaml
 ---
+title: "2023202005 Assignment 1"
+description: >
+  This assignment involves implementing and evaluating three language models:
+  NN-based Language Model (LM1), LSTM-based Language Model (LM2), and
+  Transformer Decoder-based Language Model (LM3). The models are trained,
+  validated, and tested on the Auguste Maquet corpus, with perplexity as
+  the evaluation metric. Each model's performance is analyzed and compared.
+---
+```
 
 # **2023202005 Assignment 1**
 
 ## **Overview**
 
-This assignment involves implementing and evaluating three language models: 
+This assignment involves implementing and evaluating three language models:  
 1. **NN-based Language Model (LM1)**  
 2. **LSTM-based Language Model (LM2)**  
 3. **Transformer Decoder-based Language Model (LM3)**  
@@ -34,7 +46,7 @@ The models are trained, validated, and tested on the **Auguste Maquet corpus**, 
 
 Install the required Python libraries:
 ```bash
-  pip install torch numpy tqdm gensim matplotlib
+pip install torch numpy tqdm gensim matplotlib
 ```
 
 ### **Pre-trained Embeddings**
@@ -89,35 +101,35 @@ The models are evaluated using perplexity on the test set. The test perplexities
 
 ## **Loading Pre-trained Models**
 
-Pre-trained models can be downloaded from [this link](https://drive.google.com/drive/folders/1-oGzikyY4akBL7o51fJd2P7kftN7kFGW?usp=drive_link).  
+Pre-trained models can be downloaded from [this link](https://drive.google.com/drive/folders/1-oGzikyY4akBL7o51fJd2P7kftN7kFGW?usp=drive_link).
 
 To load and evaluate a pre-trained model:
 ```python
-  # Function to load model
-  def load_model(model, optimizer, path="language_model.pth"):
-      if os.path.isfile(path):
-          checkpoint = torch.load(path)
-          model.load_state_dict(checkpoint['model_state_dict'])
-          optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-          epoch = checkpoint['epoch']
-          print(f"Model loaded from {path}, resuming from epoch {epoch}")
-          return epoch
-      else:
-          print(f"No checkpoint found at {path}")
-          return 0
-  
-  # Example usage
-  start_epoch = load_model(model, optimizer, "language_model.pth")
+# Function to load model
+def load_model(model, optimizer, path="language_model.pth"):
+    if os.path.isfile(path):
+        checkpoint = torch.load(path)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        epoch = checkpoint['epoch']
+        print(f"Model loaded from {path}, resuming from epoch {epoch}")
+        return epoch
+    else:
+        print(f"No checkpoint found at {path}")
+        return 0
+
+# Example usage
+start_epoch = load_model(model, optimizer, "language_model.pth")
 ```
 
 ### Usage for Evaluation:
 ```python
-  # Load pre-trained model
-  load_model(model, optimizer, "language_model.pth")
-  
-  # Compute perplexity on test set
-  test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
-  print(f"Test Perplexity: {test_perplexity:.4f}")
+# Load pre-trained model
+load_model(model, optimizer, "language_model.pth")
+
+# Compute perplexity on test set
+test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
+print(f"Test Perplexity: {test_perplexity:.4f}")
 ```
 
 ---
@@ -152,5 +164,6 @@ The detailed analysis, results, and comparisons of perplexity scores for each mo
 - [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 - [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 
---- 
+---
 
+This version ensures both correct formatting and YAML header structure. Let me know if you need further adjustments!
