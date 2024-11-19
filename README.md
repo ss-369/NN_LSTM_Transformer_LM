@@ -1,97 +1,156 @@
+---
+
+# **2023202005 Assignment 1**
+
+## **Overview**
+
+This assignment involves implementing and evaluating three language models: 
+1. **NN-based Language Model (LM1)**  
+2. **LSTM-based Language Model (LM2)**  
+3. **Transformer Decoder-based Language Model (LM3)**  
+
+The models are trained, validated, and tested on the **Auguste Maquet corpus**, with **perplexity** as the evaluation metric. Each model's performance is analyzed and compared.
 
 ---
 
-# Transformer Decoder-based Language Model
+## **Files**
 
-## Description
+- `2023202005-assignment1.ipynb`: Main notebook for implementing and running experiments.
+- `2023202005-LM1-*`: Perplexity files for NN-based language model.
+- `2023202005-LM2-*`: Perplexity files for LSTM-based language model.
+- `2023202005-LM3-*`: Perplexity files for Transformer Decoder-based language model.
+- `2023202005_q1.py`: Python script for NN-based language model.
+- `2023202005_q2.py`: Python script for LSTM-based language model.
+- `2023202005_q3.py`: Python script for Transformer Decoder-based language model.
+- `2023202005_Report.pdf`: Report containing experiment details, results, and analysis.
+- `tokenise.py`: Preprocessing script for tokenizing text data.
+- `readme.md`: Detailed instructions for running the code and loading pretrained models.
 
-This project implements a **Transformer Decoder-based Language Model** using PyTorch. The model predicts the next word in a sequence, relying on the architecture introduced in **"Attention is All You Need"**. The model is trained on the **Auguste Maquet** corpus, and its performance is evaluated using **perplexity scores**.
+---
 
-## Model Architecture
+## **Setup**
 
-The Transformer Decoder-based Language Model consists of:
-1. **Embedding Layer**: Converts input tokens into dense vector representations.
-2. **Positional Encoding**: Adds information about the position of tokens in the sequence.
-3. **Transformer Decoder Layers**: Multiple stacked decoder layers with self-attention and feedforward layers.
-4. **Output Layer**: A softmax layer that predicts the probability distribution of the next word in the vocabulary.
+### **Dependencies**
 
-### Key Components:
-- **Self-attention Mechanism**: Captures dependencies between tokens in the input sequence.
-- **Feedforward Network**: Applies transformations to the attention output.
-
-## Dataset
-
-- **Corpus**: Auguste Maquet corpus (as provided in the assignment).
-- **Preprocessing**: The corpus is cleaned to remove special characters and tokenized for training.
-- **Train, Validation, and Test Splits**:
-  - 10,000 sentences for validation.
-  - 20,000 sentences for testing.
-
-## Evaluation Metric
-
-- **Perplexity**: Used as the primary evaluation metric to measure the language model's performance on both the train and test datasets.
-
-## How to Run
-
-### 1. Install Dependencies
-Ensure that PyTorch and other required libraries are installed:
+Install the required Python libraries:
 ```bash
-pip install torch
+pip install torch numpy tqdm gensim matplotlib
 ```
 
-### 2. Train the Transformer Decoder-based Language Model
-To train the model, run the following command:
-```bash
-python transformer_decoder_lm.py
+### **Pre-trained Embeddings**
+
+Pre-trained **GloVe embeddings** (100-dimensional) are used. The embeddings are automatically downloaded using the `gensim` library during training.
+
+### **Dataset**
+
+The **Auguste Maquet corpus** is split into three parts:
+- `train.txt` (70%): Training data.
+- `val.txt` (10%): Validation data.
+- `test.txt` (20%): Test data.
+
+Ensure these files are in the working directory.
+
+---
+
+## **Model Training and Evaluation**
+
+### **Training**
+
+To train the models, use the Jupyter notebook `2023202005-assignment1.ipynb`. This will train the NN, LSTM, and Transformer models sequentially and save the perplexity results for each model.
+
+Alternatively, use the individual scripts:
+- For NN-based model: `python 2023202005_q1.py`
+- For LSTM-based model: `python 2023202005_q2.py`
+- For Transformer Decoder-based model: `python 2023202005_q3.py`
+
+### **Perplexity Files**
+
+Perplexity scores for train, validation, and test sets are saved in text files:
+- **NN-based LM (LM1)**:
+  - `2023202005-LM1-train-perplexity.txt`
+  - `2023202005-LM1-val-perplexity.txt`
+  - `2023202005-LM1-test-perplexity.txt`
+- **LSTM-based LM (LM2)**:
+  - `2023202005-LM2-train-perplexity.txt`
+  - `2023202005-LM2-val-perplexity.txt`
+  - `2023202005-LM2-test-perplexity.txt`
+- **Transformer-based LM (LM3)**:
+  - `2023202005-LM3-train-perplexity.txt`
+  - `2023202005-LM3-val-perplexity.txt`
+  - `2023202005-LM3-test-perplexity.txt`
+
+Each file contains line-wise perplexity scores for sentences, and the average perplexity is reported at the end.
+
+### **Evaluation**
+
+The models are evaluated using perplexity on the test set. The test perplexities for each model are saved in their respective files.
+
+---
+
+## **Loading Pre-trained Models**
+
+Pre-trained models can be downloaded from [this link](https://drive.google.com/drive/folders/1-oGzikyY4akBL7o51fJd2P7kftN7kFGW?usp=drive_link).  
+
+To load and evaluate a pre-trained model:
+```python
+# Function to load model
+def load_model(model, optimizer, path="language_model.pth"):
+    if os.path.isfile(path):
+        checkpoint = torch.load(path)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+        epoch = checkpoint['epoch']
+        print(f"Model loaded from {path}, resuming from epoch {epoch}")
+        return epoch
+    else:
+        print(f"No checkpoint found at {path}")
+        return 0
+
+# Example usage
+start_epoch = load_model(model, optimizer, "language_model.pth")
 ```
-The model will begin training using the Auguste Maquet corpus. Perplexity scores will be generated and saved after each epoch.
 
-### 3. Evaluate the Model
-After training, the model can be evaluated on the validation and test datasets to compute the perplexity scores:
-```bash
-python transformer_decoder_lm.py --evaluate
+### Usage for Evaluation:
+```python
+# Load pre-trained model
+load_model(model, optimizer, "language_model.pth")
+
+# Compute perplexity on test set
+test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
+print(f"Test Perplexity: {test_perplexity:.4f}")
 ```
 
-### 4. Pretrained Models
-If the pretrained models exceed the file size limit, upload them to OneDrive or Google Drive and include the link here in the `README.md`. You can load the pretrained model by running:
-```bash
-python transformer_decoder_lm.py --load_model <path_to_model>
-```
+---
 
-## Perplexity Files
+## **Submission Format**
 
-The perplexity scores will be saved in text files with the following format:
-- **Train Perplexity**: `rollnumber_LM3_train_perplexity.txt`
-- **Test Perplexity**: `rollnumber_LM3_test_perplexity.txt`
-
-Each file will contain one line per sentence in the format:
-```
-Sentence TAB perplexity-score
-```
-At the end of the file, the average perplexity score will be reported.
-
-## Hyperparameter Tuning
-
-- Experiment with different numbers of **Transformer decoder layers**, **dropout rates**, and **learning rates**.
-- Report the results in the accompanying PDF file and compare perplexity scores across different configurations.
-
-## Submission Format
-
-Zip the following files into one archive:
+Submit a zip file named as `<roll_number>_assignment1.zip`, containing:
 1. **Source Code**:
-   - `transformer_decoder_lm.py`
+   - `2023202005-assignment1.ipynb`
+   - `2023202005_q1.py`, `2023202005_q2.py`, `2023202005_q3.py`
+   - `tokenise.py`
 2. **Perplexity Files**:
-   - `rollnumber_LM3_train_perplexity.txt`
-   - `rollnumber_LM3_test_perplexity.txt`
+   - `2023202005-LM1-*`
+   - `2023202005-LM2-*`
+   - `2023202005-LM3-*`
 3. **Pretrained Models**:
-   - `transformer_decoder_model.pt` (if applicable, provide a link for large files).
-4. **README.md**: Include instructions on how to execute the code and load pretrained models.
+   - Include a download link for large files if needed.
+4. **README.md**:
+   - Instructions to execute the code and load pre-trained models.
 
-Name the zip file as `<roll_number>_assignment1.zip`.
+---
 
-## Resources
+## **Results**
+
+The detailed analysis, results, and comparisons of perplexity scores for each model can be found in `2023202005_Report.pdf`.
+
+---
+
+## **Resources**
+
 - [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+- [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 - [Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 
----
+--- 
 
