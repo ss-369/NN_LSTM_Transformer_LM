@@ -34,7 +34,7 @@ The models are trained, validated, and tested on the **Auguste Maquet corpus**, 
 
 Install the required Python libraries:
 ```bash
-pip install torch numpy tqdm gensim matplotlib
+  pip install torch numpy tqdm gensim matplotlib
 ```
 
 ### **Pre-trained Embeddings**
@@ -93,31 +93,31 @@ Pre-trained models can be downloaded from [this link](https://drive.google.com/d
 
 To load and evaluate a pre-trained model:
 ```python
-# Function to load model
-def load_model(model, optimizer, path="language_model.pth"):
-    if os.path.isfile(path):
-        checkpoint = torch.load(path)
-        model.load_state_dict(checkpoint['model_state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        epoch = checkpoint['epoch']
-        print(f"Model loaded from {path}, resuming from epoch {epoch}")
-        return epoch
-    else:
-        print(f"No checkpoint found at {path}")
-        return 0
-
-# Example usage
-start_epoch = load_model(model, optimizer, "language_model.pth")
+  # Function to load model
+  def load_model(model, optimizer, path="language_model.pth"):
+      if os.path.isfile(path):
+          checkpoint = torch.load(path)
+          model.load_state_dict(checkpoint['model_state_dict'])
+          optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+          epoch = checkpoint['epoch']
+          print(f"Model loaded from {path}, resuming from epoch {epoch}")
+          return epoch
+      else:
+          print(f"No checkpoint found at {path}")
+          return 0
+  
+  # Example usage
+  start_epoch = load_model(model, optimizer, "language_model.pth")
 ```
 
 ### Usage for Evaluation:
 ```python
-# Load pre-trained model
-load_model(model, optimizer, "language_model.pth")
-
-# Compute perplexity on test set
-test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
-print(f"Test Perplexity: {test_perplexity:.4f}")
+  # Load pre-trained model
+  load_model(model, optimizer, "language_model.pth")
+  
+  # Compute perplexity on test set
+  test_perplexity = compute_perplexity(model, test_loader, criterion, device, "test_perplexity.txt")
+  print(f"Test Perplexity: {test_perplexity:.4f}")
 ```
 
 ---
