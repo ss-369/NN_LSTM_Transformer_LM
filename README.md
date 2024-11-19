@@ -1,5 +1,3 @@
----
-
 # **NN_LSTM_Transformer_LM**
 
 This repository contains the implementation and evaluation of three language models:  
